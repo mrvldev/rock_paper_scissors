@@ -1,54 +1,51 @@
-let pl_sc = 0;
-let comp_sc = 0;
-const maxScore = 5;
+let computerChoice = getComputerChoice();
+let humanChoice = getHumanChoice();
+let computerScore = 0;
+let humanScore = 0;
 
-// computer choice
-function computer_choice() {
-  const letters = ["s", "p", "r"];
-  return letters[Math.floor(Math.random() * letters.length)];
+//get computer choice randomly
+function getComputerChoice() {
+    return Math.floor(Math.random() * 3) + 1; // 1: Rock, 2: Paper, 3: Scissors
 }
 
-// win?
-function determineWinner(player, computer) {
-  if (player === computer) {
-    return "It's a draw!";
-  }
-
-  if (
-    (player === "s" && computer === "p") ||
-    (player === "r" && computer === "s") ||
-    (player === "p" && computer === "r")
-  ) {
-    pl_sc++;
-    return "You win this round!";
-  } else {
-    comp_sc++;
-    return "Computer wins this round!";
-  }
+//get human choice from user input
+function getHumanChoice() {
+    return prompt("Enter your choice (1: Rock, 2: Paper, 3: Scissors): ");
 }
 
-// main part
-while (pl_sc < maxScore && comp_sc < maxScore) {
-  let answer = prompt("Enter (S)cissor, (P)aper or (R)ock: ").toLowerCase();
-
-  // check invalid input
-  if (!["s", "p", "r"].includes(answer)) {
-    alert("Invalid input! Please enter s, p, or r.");
-    continue;
-  }
-
-  let comp = computer_choice();
-
-  console.log("You chose:", answer);
-  console.log("Computer chose:", comp);
-  console.log(determineWinner(answer, comp));
-  console.log(`Score → You: ${pl_sc} | Computer: ${comp_sc}`);
-  console.log("----------------------------");
+function playRound(computerChoice, humanChoice) 
+        {
+    if (computerChoice == humanChoice) {
+        return "It's a tie!";
+    }
+    if  (
+        (computerChoice == 1 && humanChoice == 3) || 
+        (computerChoice == 2 && humanChoice == 1) || 
+        (computerChoice == 3 && humanChoice == 2)
+    )
+    {
+        computerScore++;
+        return "Computer wins this round!";
+    } 
+    else 
+    {
+        humanScore++;
+        return "Human wins this round!";
+    }
 }
 
-// scores
-if (pl_sc === maxScore) {
-  console.log("🎉 You won the game!");
-} else {
-  console.log("💻 Computer won the game!");
+function playGame() {
+    for (let i = 0; i < 5; i++) {
+        computerChoice = getComputerChoice();
+        humanChoice = getHumanChoice();
+        console.log("Computer choice is: " + computerChoice);
+        console.log("Human choice is: " + humanChoice);
+        console.log(playRound(computerChoice, humanChoice));
+        console.log("Computer Score: " + computerScore);
+        console.log("Human Score: " + humanScore);
+        console.log("-----------------------------------------------------------")
+    }
 }
+
+
+playGame();
